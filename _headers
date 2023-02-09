@@ -1,3 +1,4 @@
+# Required to access SharedArrayBuffer in supported browsers
 /*
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Embedder-Policy: require-corp
