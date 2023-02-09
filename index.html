@@ -18,9 +18,8 @@
         <h1 class="text-center py-4"><span class="font-bold text-5xl">FFmpeg</span><span
                 class="text-xl mx-3">X</span><span class="text-4xl italic">WASM</span></h1>
 
-        <label class="mx-auto w-1/2 block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            for="file_input">Upload
-            file</label>
+        <label class="mx-auto w-1/2 block mb-2 font-medium text-gray-900 dark:text-white" for="uploader">Upload
+            video file</label>
         <input
             class="block mx-auto w-1/2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             id="uploader" type="file">
@@ -34,15 +33,20 @@
     const transcode = async ({ target: { files } }) => {
         const msg = document.getElementById('run-msg');
         msg.classList.remove('hidden');
+
         const { name } = files[0];
+
         await ffmpeg.load();
         ffmpeg.FS('writeFile', name, await fetchFile(files[0]));
+
         // ffmpeg -i input.mp4 -ss 00:00:03 -vframes 1 -q:v 2 output.jpg
         await ffmpeg.run('-i', name, '-ss', '00:00:03', '-vframes', '1', '-q:v', '2', 'output.jpg');
+
         const data = ffmpeg.FS('readFile', 'output.jpg');
 
-        const img = document.getElementById('thumbnail');
         msg.classList.toggle('hidden');
+
+        const img = document.getElementById('thumbnail');
         img.classList.toggle('hidden');
         img.src = URL.createObjectURL(new Blob([data.buffer], { type: 'image/jpeg' }));
     }
