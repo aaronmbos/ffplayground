@@ -17,13 +17,20 @@
     <main class="container p-8">
         <h1 class="text-center py-4"><span class="font-bold text-5xl">FFmpeg</span><span
                 class="text-xl mx-3">X</span><span class="text-4xl italic">WASM</span></h1>
-
-        <label class="mx-auto w-1/2 block mb-2 font-medium text-gray-900 dark:text-white" for="uploader">Upload
-            video file</label>
-        <input
-            class="block mx-auto w-1/2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-            id="uploader" type="file">
-        <p class="text-center italic mt-6 hidden" id="run-msg">Running your command ...</p>
+        <div class="sm:w-full md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto">
+            <label class="mx-auto w-full block mb-2 font-medium text-gray-900" for="uploader">Select
+                video file</label>
+            <input
+                class="block mx-auto w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+                id="uploader" type="file">
+        </div>
+        <div class="hidden" id="msg-container">
+            <p id="status-msg" class="text-center italic mt-6">Running your command ...</p>
+            <p class="text-center text-sm font-mono mt-4 text-gray-700">ffmpeg -i input.mp4 -ss 00:00:03 -vframes 1 -q:v
+                2
+                output.jpg
+            </p>
+        </div>
         <img class="my-5 mx-auto rounded hidden" height="500" width="500" id="thumbnail" />
     </main>
 </body>
@@ -31,7 +38,7 @@
     const { createFFmpeg, fetchFile } = FFmpeg;
     const ffmpeg = createFFmpeg({ log: true });
     const transcode = async ({ target: { files } }) => {
-        const msg = document.getElementById('run-msg');
+        const msg = document.getElementById('msg-container');
         msg.classList.remove('hidden');
 
         const { name } = files[0];
@@ -44,12 +51,15 @@
 
         const data = ffmpeg.FS('readFile', 'output.jpg');
 
-        msg.classList.toggle('hidden');
-
         const img = document.getElementById('thumbnail');
         img.classList.toggle('hidden');
+        const status = document.getElementById('status-msg');
+        status.innerText = "Command completed successfully."
+        status.classList.toggle('italic');
+        status.classList.add('font-bold');
         img.src = URL.createObjectURL(new Blob([data.buffer], { type: 'image/jpeg' }));
     }
+
     document.getElementById('uploader').addEventListener('change', transcode);
 </script>
 
