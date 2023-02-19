@@ -34,33 +34,6 @@
         <img class="my-5 mx-auto rounded hidden" height="500" width="500" id="thumbnail" />
     </main>
 </body>
-<script>
-    const { createFFmpeg, fetchFile } = FFmpeg;
-    const ffmpeg = createFFmpeg({ log: true });
-    const transcode = async ({ target: { files } }) => {
-        const msg = document.getElementById('msg-container');
-        msg.classList.remove('hidden');
-
-        const { name } = files[0];
-
-        await ffmpeg.load();
-        ffmpeg.FS('writeFile', name, await fetchFile(files[0]));
-
-        // ffmpeg -i input.mp4 -ss 00:00:03 -vframes 1 -q:v 2 output.jpg
-        await ffmpeg.run('-i', name, '-ss', '00:00:03', '-vframes', '1', '-q:v', '2', 'output.jpg');
-
-        const data = ffmpeg.FS('readFile', 'output.jpg');
-
-        const img = document.getElementById('thumbnail');
-        img.classList.toggle('hidden');
-        const status = document.getElementById('status-msg');
-        status.innerText = "Command completed successfully."
-        status.classList.toggle('italic');
-        status.classList.add('font-bold');
-        img.src = URL.createObjectURL(new Blob([data.buffer], { type: 'image/jpeg' }));
-    }
-
-    document.getElementById('uploader').addEventListener('change', transcode);
-</script>
+<script type="module" src="./js/main.js"></script>
 
 </html>
