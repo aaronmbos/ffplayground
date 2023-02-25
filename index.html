@@ -1,44 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FFplayground</title>
-    <link href="./dist/output.css" rel="stylesheet">
-    </link>
+    <link href="./dist/output.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
     <link rel="shortcut icon" type="image/jpg" href="favicon.ico" />
-</head>
+  </head>
 
-<body>
+  <body>
     <main class="container mx-auto p-8">
-        <h1 class="text-center py-4"><span class="font-bold text-5xl">FF</span><span class="text-sm">(mpeg)</span><span
-                class="text-4xl">playground</span></h1>
-        <div class="lg:w-2/3 xl:w-1/2 mx-auto">
-            <label class="mx-auto w-full block mb-2 font-medium text-gray-900" for="uploader">Select
-                video file</label>
-            <input id="uploader" accept="video/*" type="file" class="block w-full text-sm text-slate-600
-              file:mr-4 file:py-2 file:px-4
-              file:rounded-l file:border
-              file:text-sm file:font-semibold
-              file:bg-slate-700 file:text-white
-              hover:file:bg-slate-600
-              cursor-pointer file:cursor-pointer
-              border border-solid rounded
-            " />
-        </div>
-        <div class="hidden" id="msg-container">
-            <p id="status-msg" class="text-center italic mt-6">Running your command ...</p>
-            <p class="text-center text-sm font-mono mt-4 text-gray-700">ffmpeg -i input.mp4 -ss 00:00:03 -vframes 1 -q:v
-                2
-                output.jpg
-            </p>
-        </div>
-        <img class="my-5 mx-auto rounded hidden" height="500" width="500" id="thumbnail" />
+      <h1 class="text-center py-4">
+        <span class="font-bold text-5xl">FF</span
+        ><span class="text-sm">(mpeg)</span
+        ><span class="text-4xl">playground</span>
+      </h1>
+      <div class="lg:w-2/3 xl:w-1/2 mx-auto">
+        <form>
+          <div>
+            <div class="my-6">
+              <label
+                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                for="uploader"
+                >1. Select input file
+              </label>
+              <input
+                id="uploader"
+                accept="video/*"
+                type="file"
+                class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-bold file:bg-slate-700 file:text-white hover:file:bg-slate-600 cursor-pointer file:cursor-pointer focus:file:border-0 focus:ring-0 focus:file:ring-0"
+              />
+            </div>
+            <div class="my-6">
+              <label
+                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                for="command"
+                >2. FFmpeg command</label
+              >
+              <input
+                id="command"
+                type="text"
+                class="mt-0 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-black"
+              />
+            </div>
+            <button
+              class="bg-slate-700 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded text-sm"
+            >
+              Run
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="hidden" id="msg-container">
+        <p id="status-msg" class="text-center italic mt-6">
+          Running your command ...
+        </p>
+        <p class="text-center text-sm font-mono mt-4 text-gray-700">
+          ffmpeg -i input.mp4 -ss 00:00:03 -vframes 1 -q:v 2 output.jpg
+        </p>
+      </div>
+      <img
+        class="my-5 mx-auto rounded hidden"
+        height="500"
+        width="500"
+        id="thumbnail"
+      />
     </main>
-</body>
-<script type="module" src="./js/main.js"></script>
-
+  </body>
+  <script type="module" src="./js/main.js"></script>
 </html>
