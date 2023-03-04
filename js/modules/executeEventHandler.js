@@ -1,7 +1,12 @@
 import { executeCommand } from "./transcoder.js";
+import { parseFfmpegCommand } from "./commandParser.js";
 
 async function handleExecuteEvent() {
   const msg = document.getElementById("msg-container");
+  const rawCommand = document.getElementById("command").value;
+
+  parseFfmpegCommand(rawCommand);
+
   msg.classList.remove("hidden");
 
   let files = document.getElementById("uploader").files;
