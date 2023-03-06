@@ -6,21 +6,17 @@ function parseFfmpegCommand(rawCommand) {
   const rawOptions = rawCommand.replace("ffmpeg", "");
 
   let parsedOptions = [];
-  let optionSeparator = [];
   let currentOption = [];
   for (let index = 0; index < rawOptions.length; index++) {
     const val = rawOptions[index];
 
-    // This logic isn't quite right to account for spaces and quotes
-    if (val === " " || val === '"') {
-      if (optionSeparator.length === 0) {
-        optionSeparator.push(val);
-        continue;
-      } else {
+    // -i input.mp4 -ss 00:00:03 -vframes 1 -q:v 2 output.jpg
+    if (val === " ") {
+      if (currentOption.length > 0) {
         parsedOptions.push(currentOption.join(""));
         currentOption = [];
-        optionSeparator = [];
       }
+      continue;
     } else {
       currentOption.push(val);
     }
