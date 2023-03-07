@@ -2,7 +2,7 @@
   "name": "browser-ffmpeg",
   "version": "1.0.0",
   "description": "Site for running FFmpeg commands in the browser.",
-  "type":"module",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aaronmbos/browser-ffmpeg.git"
