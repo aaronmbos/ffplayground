@@ -1,9 +1,11 @@
 function parseFfmpegCommand(rawCommand) {
-  if (!rawCommand) {
+  const sanitizedInput = sanitizeInput(rawCommand);
+
+  if (!sanitizedInput) {
     throw new Error("Invalid command");
   }
 
-  const rawOptions = rawCommand.replace("ffmpeg", "");
+  const rawOptions = sanitizedInput.replace("ffmpeg", "");
 
   let parsedOptions = [];
   let currentOption = [];
@@ -19,10 +21,17 @@ function parseFfmpegCommand(rawCommand) {
       continue;
     } else {
       currentOption.push(val);
+      if (index === rawOptions.length - 1) {
+        parsedOptions.push(currentOption.join(""));
+        currentOption = [];
+      }
     }
   }
-  console.log(parsedOptions);
   return parsedOptions;
 }
+
+const sanitizeInput = (input) => {
+  return input.trim();
+};
 
 export { parseFfmpegCommand };

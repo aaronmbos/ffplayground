@@ -13,9 +13,12 @@
   <body>
     <main class="container mx-auto p-8">
       <h1 class="text-center py-4">
-        <span class="font-bold text-5xl">FF</span
-        ><span class="text-sm">(mpeg)</span
-        ><span class="text-4xl">playground</span>
+        <span class="border-b-black border-b-4 pb-1">
+          <span class="font-bold text-5xl italic">FF</span>
+          <span class="font-bold text-4xl uppercase italic"
+            >playground</span
+          ></span
+        >
       </h1>
       <div class="lg:w-2/3 xl:w-1/2 mx-auto">
         <div>
@@ -42,7 +45,8 @@
               <input
                 id="command"
                 type="text"
-                class="mt-0 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-black"
+                placeholder="ffmpeg -i input.mp4 -ss 00:00:03 -vframes 1 -q:v 2 output.jpg"
+                class="mt-0 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-black placeholder:italic"
               />
             </div>
             <button
