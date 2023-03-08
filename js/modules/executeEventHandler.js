@@ -5,13 +5,13 @@ async function handleExecuteEvent() {
   const msg = document.getElementById("msg-container");
   const rawCommand = document.getElementById("command").value;
 
-  parseFfmpegCommand(rawCommand);
+  const commandArgs = parseFfmpegCommand(rawCommand);
 
   msg.classList.remove("hidden");
 
   let files = document.getElementById("uploader").files;
 
-  const data = await executeCommand(files[0]);
+  const data = await executeCommand(files[0], commandArgs);
 
   const img = document.getElementById("thumbnail");
   img.classList.remove("hidden");

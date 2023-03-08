@@ -1,4 +1,4 @@
-async function executeCommand(file) {
+async function executeCommand(file, commandArgs) {
   const { createFFmpeg, fetchFile } = FFmpeg;
   const ffmpeg = createFFmpeg({ log: true });
 
@@ -7,18 +7,8 @@ async function executeCommand(file) {
   await ffmpeg.load();
   ffmpeg.FS("writeFile", name, await fetchFile(file));
 
-  // ffmpeg -i input.mp4 -ss 00:00:03 -vframes 1 -q:v 2 output.jpg
-  await ffmpeg.run(
-    "-i",
-    name,
-    "-ss",
-    "00:00:03",
-    "-vframes",
-    "1",
-    "-q:v",
-    "2",
-    "output.jpg"
-  );
+  // Using .apply here to pass in args as an array
+  await ffmpeg.run.apply(null, commandArgs);
 
   return ffmpeg.FS("readFile", "output.jpg");
 }
