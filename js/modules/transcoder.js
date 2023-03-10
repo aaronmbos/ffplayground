@@ -10,7 +10,7 @@ async function executeCommand(file, commandArgs) {
   // Using .apply here to pass in args as an array
   await ffmpeg.run.apply(null, commandArgs);
 
-  return ffmpeg.FS("readFile", "output.jpg");
+  return ffmpeg.FS("readFile", commandArgs[commandArgs.length - 1]);
 }
 
 export { executeCommand };

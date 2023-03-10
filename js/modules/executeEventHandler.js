@@ -1,5 +1,6 @@
 import { executeCommand } from "./transcoder.js";
 import { parseFfmpegCommand } from "./commandParser.js";
+import { isVideoFile } from "./utils.js";
 
 async function handleExecuteEvent() {
   const msg = document.getElementById("msg-container");
@@ -13,17 +14,24 @@ async function handleExecuteEvent() {
 
   const data = await executeCommand(files[0], commandArgs);
 
-  const img = document.getElementById("thumbnail");
-  img.classList.remove("hidden");
-
   const status = document.getElementById("status-msg");
   status.innerText = "Command completed successfully.";
   status.classList.remove("italic");
   status.classList.add("font-bold");
 
-  img.src = URL.createObjectURL(
-    new Blob([data.buffer], { type: "image/jpeg" })
-  );
+  // Need to set this up based on output file type
+  if (false) {
+    const img = document.getElementById("thumbnail");
+    img.classList.remove("hidden");
+    img.src = URL.createObjectURL(
+      new Blob([data.buffer], { type: "image/jpeg" })
+    );
+  } else {
+    const video = document.getElementById("output-video");
+    video.classList.remove("hidden");
+    video.src = URL.createObjectURL(new Blob([data.buffer]));
+    video.load();
+  }
 }
 
 export { handleExecuteEvent };
