@@ -1,4 +1,4 @@
-function parseFfmpegCommand(rawCommand) {
+const parseFfmpegCommand = (rawCommand) => {
   const sanitizedInput = sanitizeInput(rawCommand);
 
   if (!sanitizedInput) {
@@ -34,7 +34,7 @@ function parseFfmpegCommand(rawCommand) {
     }
   }
   return parsedOptions;
-}
+};
 
 const sanitizeInput = (input) => {
   return input.trim();

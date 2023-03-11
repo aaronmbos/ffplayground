@@ -1,9 +1,6 @@
 const videoFileExtensions = ["webm", "ogg", "mov", "mp4"];
 
-const isVideoFile = (fileName) => {
-  const [name, extension] = fileName.split(".");
-
-  return videoFileExtensions.includes(extension.trim());
-};
+const isVideoFile = (fileName) =>
+  videoFileExtensions.includes(fileName.split(".")[1].trim());
 
 export { isVideoFile };

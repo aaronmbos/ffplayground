@@ -35,52 +35,49 @@
               class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-bold file:bg-slate-700 file:text-white hover:file:bg-slate-600 cursor-pointer file:cursor-pointer focus:file:border-0 focus:ring-0 focus:file:ring-0"
             />
           </div>
-          <div id="test-container" class="hidden">
-            <div class="my-6">
-              <label
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                for="command"
-                >2. FFmpeg command</label
-              >
-              <input
-                id="command"
-                type="text"
-                placeholder="ffmpeg -i input.mp4 -ss 00:00:03 -vframes 1 -q:v 2 output.jpg"
-                class="mt-0 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-black placeholder:italic"
-              />
-            </div>
-            <button
-              id="execute"
-              class="bg-slate-700 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded text-sm"
+          <div class="my-6">
+            <label
+              class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              for="command"
+              >2. FFmpeg command</label
             >
-              Run
-            </button>
+            <input
+              id="command"
+              type="text"
+              placeholder="ffmpeg -i input.mp4 -ss 00:00:03 -vframes 1 -q:v 2 output.jpg"
+              class="mt-0 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-black placeholder:italic"
+            />
           </div>
+          <button
+            id="execute"
+            class="bg-slate-700 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded text-sm"
+          >
+            Run
+          </button>
         </div>
       </div>
-      <div class="hidden" id="msg-container">
-        <p id="status-msg" class="text-center italic mt-6">
+      <div id="output-container">
+        <p id="status-msg" class="hidden text-center italic mt-6">
           Running your command ...
         </p>
-        <p class="text-center text-sm font-mono mt-4 text-gray-700">
-          ffmpeg -i input.mp4 -ss 00:00:03 -vframes 1 -q:v 2 output.jpg
-        </p>
+        <img
+          class="my-5 mx-auto rounded hidden"
+          height="500"
+          width="500"
+          id="output-image"
+        />
+        <video
+          class="my-5 mx-auto rounded hidden"
+          height="500"
+          width="500"
+          id="output-video"
+          controls
+          autoplay
+        ></video>
       </div>
-      <img
-        class="my-5 mx-auto rounded hidden"
-        height="500"
-        width="500"
-        id="thumbnail"
-      />
-      <video
-        class="my-5 mx-auto rounded hidden"
-        height="500"
-        width="500"
-        id="output-video"
-        controls
-        autoplay
-      ></video>
     </main>
+    <!-- Kind of silly, but this hidden div is for classes that get added by JS-->
+    <div class="hidden text-red-600"></div>
   </body>
   <script type="module" src="./js/main.js"></script>
 </html>
