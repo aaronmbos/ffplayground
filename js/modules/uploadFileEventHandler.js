@@ -1,12 +1,16 @@
 async function handleFileUpload(event) {
-  console.log(event);
-  var videoSrc = window.URL.createObjectURL(event.target.files[0]);
+  for (let i = 0; i < event.target.files.length; i++) {
+    const file = event.target.files[i];
+    var videoSrc = window.URL.createObjectURL(file);
 
-  var videoEl = document.createElement("video");
-  videoEl.src = videoSrc;
-  videoEl.type = "video/mp4";
-  videoEl.controls = true;
-  document.body.insertBefore(videoEl, document.body.firstChild);
+    var videoEl = document.createElement("video");
+    videoEl.src = videoSrc;
+    videoEl.type = "video/mp4";
+    videoEl.controls = true;
+
+    var videoContainer = document.getElementById("video-container");
+    videoContainer.appendChild(videoEl);
+  }
 }
 
 export { handleFileUpload };
