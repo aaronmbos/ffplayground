@@ -75,4 +75,9 @@ const handleError = (error, { status }) => {
   console.error(error);
 };
 
-export { handleExecuteEvent };
+function handleQuickActionSelect() {
+  const selectedValue = document.getElementById("quick-action").value;
+  console.log(selectedValue);
+}
+
+export { handleExecuteEvent, handleQuickActionSelect };
