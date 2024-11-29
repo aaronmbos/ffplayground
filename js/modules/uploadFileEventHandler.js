@@ -8,6 +8,8 @@ async function handleFileUpload(event) {
     videoEl.type = "video/mp4";
     videoEl.controls = true;
 
+    videoEl.addEventListener();
+
     var videoContainer = document.getElementById("video-container");
     videoContainer.appendChild(videoEl);
   }
