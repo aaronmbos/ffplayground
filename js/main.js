@@ -1,6 +1,7 @@
 import {
   handleExecuteEvent,
   handleQuickActionSelect,
+  handleConvertButtonClick,
 } from "./modules/executeEventHandler.js";
 
 document
@@ -10,3 +11,7 @@ document
 document
   .getElementById("quick-action")
   .addEventListener("change", handleQuickActionSelect);
+
+document
+  .getElementById("convert-btn")
+  .addEventListener("click", handleConvertButtonClick);

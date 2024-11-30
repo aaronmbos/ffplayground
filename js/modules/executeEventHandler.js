@@ -77,7 +77,69 @@ const handleError = (error, { status }) => {
 
 function handleQuickActionSelect() {
   const selectedValue = document.getElementById("quick-action").value;
-  console.log(selectedValue);
+
+  switch (selectedValue) {
+    case "fmt-conversion":
+    default:
+      document
+        .getElementById("fmt-conversion-container")
+        .classList.toggle("hidden");
+
+      const fileName = document.getElementById("uploader").files[0].name;
+      const fileExtension = fileName.split(".").pop();
+      document.getElementById("input-fmt-selected").innerHTML = fileExtension;
+      document.getElementById("input-fmt-selected").classList.toggle("hidden");
+      document.getElementById("input-fmt-default").classList.toggle("hidden");
+      break;
+  }
 }
 
-export { handleExecuteEvent, handleQuickActionSelect };
+async function handleConvertButtonClick() {
+  const fileName = document.getElementById("uploader").files[0].name;
+  const selectedOutput = document.getElementById("convert-output-fmt").value;
+
+  let outputFormat = "";
+  switch (selectedOutput) {
+    case "fmt-mp4":
+      outputFormat = "mp4";
+      break;
+    case "fmt-mov":
+      outputFormat = "mov";
+      break;
+    case "fmt-gif":
+      outputFormat = "gif";
+      break;
+    default:
+      break;
+  }
+
+  const convertCommand = `-i ${fileName} -c copy output.${outputFormat}`;
+  console.log(convertCommand);
+  const commandArgs = parseFfmpegCommand(convertCommand);
+  console.log(commandArgs);
+  const data = await executeCommand(
+    document.getElementById("uploader").files[0],
+    commandArgs
+  );
+
+  const url = URL.createObjectURL(new Blob([data.buffer]));
+
+  // Create a temporary anchor element
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `output.${outputFormat}`; // Set the download attribute with desired filename
+
+  // Programmatically click the anchor to trigger download
+  document.body.appendChild(a);
+  a.click();
+
+  // Clean up
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+export {
+  handleExecuteEvent,
+  handleQuickActionSelect,
+  handleConvertButtonClick,
+};
