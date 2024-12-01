@@ -1,6 +1,6 @@
 import { executeCommand } from "./transcoder.js";
 import { parseFfmpegCommand } from "./commandParser.js";
-import { isVideoFile } from "./utils.js";
+import { isVideoFile, downloadFile } from "./utils.js";
 
 async function handleExecuteEvent() {
   const elements = getElements();
@@ -122,20 +122,7 @@ async function handleConvertButtonClick() {
     commandArgs
   );
 
-  const url = URL.createObjectURL(new Blob([data.buffer]));
-
-  // Create a temporary anchor element
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `output.${outputFormat}`; // Set the download attribute with desired filename
-
-  // Programmatically click the anchor to trigger download
-  document.body.appendChild(a);
-  a.click();
-
-  // Clean up
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  downloadFile(data, `output.${outputFormat}`);
 }
 
 export {
