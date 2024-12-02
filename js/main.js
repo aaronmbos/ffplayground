@@ -1,9 +1,11 @@
+import { handleExecuteEvent } from "./modules/executeEventHandler.js";
+
 import {
-  handleExecuteEvent,
   handleQuickActionSelect,
   handleConvertButtonClick,
-  handleFileUploadEvent,
-} from "./modules/executeEventHandler.js";
+} from "./modules/quickActionEventHandler.js";
+
+import { handleFileUploadEvent } from "./modules/uploadEventHandler.js";
 
 document
   .getElementById("execute")

@@ -1,6 +1,6 @@
 import { executeCommand } from "./transcoder.js";
 import { parseFfmpegCommand } from "./commandParser.js";
-import { isVideoFile, downloadFile, getFileExtension } from "./utils.js";
+import { isVideoFile } from "./utils.js";
 
 async function handleExecuteEvent() {
   const elements = getElements();
@@ -75,69 +75,4 @@ const handleError = (error, { status }) => {
   console.error(error);
 };
 
-function handleQuickActionSelect() {
-  const selectedValue = document.getElementById("quick-action").value;
-
-  switch (selectedValue) {
-    case "fmt-conversion":
-    default:
-      document
-        .getElementById("fmt-conversion-container")
-        .classList.toggle("hidden");
-
-      const fileName = document.getElementById("uploader").files[0].name;
-      setFileExtension(fileName);
-      break;
-  }
-}
-
-async function handleConvertButtonClick() {
-  const fileName = document.getElementById("uploader").files[0].name;
-  const selectedOutput = document.getElementById("convert-output-fmt").value;
-
-  let outputFormat = "";
-  switch (selectedOutput) {
-    case "fmt-mp4":
-      outputFormat = "mp4";
-      break;
-    case "fmt-mov":
-      outputFormat = "mov";
-      break;
-    case "fmt-gif":
-      outputFormat = "gif";
-      break;
-    default:
-      break;
-  }
-
-  const convertCommand = `-i ${fileName} -c copy output.${outputFormat}`;
-  const commandArgs = parseFfmpegCommand(convertCommand);
-  const data = await executeCommand(
-    document.getElementById("uploader").files[0],
-    commandArgs
-  );
-
-  downloadFile(data, `output.${outputFormat}`);
-}
-
-async function handleFileUploadEvent(event) {
-  const file = event.target.files[0];
-  const fileName = file.name;
-
-  setFileExtension(fileName);
-}
-
-const setFileExtension = (fileName) => {
-  const fileExtension = getFileExtension(fileName);
-
-  document.getElementById("input-fmt-selected").innerHTML = fileExtension;
-  document.getElementById("input-fmt-selected").classList.toggle("hidden");
-  document.getElementById("input-fmt-default").classList.toggle("hidden");
-};
-
-export {
-  handleExecuteEvent,
-  handleQuickActionSelect,
-  handleConvertButtonClick,
-  handleFileUploadEvent,
-};
+export { handleExecuteEvent };
