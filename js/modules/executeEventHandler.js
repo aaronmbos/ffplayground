@@ -1,6 +1,6 @@
 import { executeCommand } from "./transcoder.js";
 import { parseFfmpegCommand } from "./commandParser.js";
-import { isVideoFile, downloadFile } from "./utils.js";
+import { isVideoFile, downloadFile, getFileExtension } from "./utils.js";
 
 async function handleExecuteEvent() {
   const elements = getElements();
@@ -86,10 +86,7 @@ function handleQuickActionSelect() {
         .classList.toggle("hidden");
 
       const fileName = document.getElementById("uploader").files[0].name;
-      const fileExtension = fileName.split(".").pop();
-      document.getElementById("input-fmt-selected").innerHTML = fileExtension;
-      document.getElementById("input-fmt-selected").classList.toggle("hidden");
-      document.getElementById("input-fmt-default").classList.toggle("hidden");
+      setFileExtension(fileName);
       break;
   }
 }
@@ -114,9 +111,7 @@ async function handleConvertButtonClick() {
   }
 
   const convertCommand = `-i ${fileName} -c copy output.${outputFormat}`;
-  console.log(convertCommand);
   const commandArgs = parseFfmpegCommand(convertCommand);
-  console.log(commandArgs);
   const data = await executeCommand(
     document.getElementById("uploader").files[0],
     commandArgs
@@ -125,8 +120,24 @@ async function handleConvertButtonClick() {
   downloadFile(data, `output.${outputFormat}`);
 }
 
+async function handleFileUploadEvent(event) {
+  const file = event.target.files[0];
+  const fileName = file.name;
+
+  setFileExtension(fileName);
+}
+
+const setFileExtension = (fileName) => {
+  const fileExtension = getFileExtension(fileName);
+
+  document.getElementById("input-fmt-selected").innerHTML = fileExtension;
+  document.getElementById("input-fmt-selected").classList.toggle("hidden");
+  document.getElementById("input-fmt-default").classList.toggle("hidden");
+};
+
 export {
   handleExecuteEvent,
   handleQuickActionSelect,
   handleConvertButtonClick,
+  handleFileUploadEvent,
 };

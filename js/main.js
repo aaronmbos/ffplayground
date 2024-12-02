@@ -2,6 +2,7 @@ import {
   handleExecuteEvent,
   handleQuickActionSelect,
   handleConvertButtonClick,
+  handleFileUploadEvent,
 } from "./modules/executeEventHandler.js";
 
 document
@@ -15,3 +16,7 @@ document
 document
   .getElementById("convert-btn")
   .addEventListener("click", handleConvertButtonClick);
+
+document
+  .getElementById("uploader")
+  .addEventListener("change", handleFileUploadEvent);

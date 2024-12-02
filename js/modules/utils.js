@@ -1,7 +1,7 @@
 const videoFileExtensions = ["webm", "ogg", "mov", "mp4"];
 
 const isVideoFile = (fileName) =>
-  videoFileExtensions.includes(fileName.split(".")[1].trim());
+  videoFileExtensions.includes(getFileExtension(fileName).trim());
 
 const downloadFile = (data, fileName) => {
   const url = URL.createObjectURL(new Blob([data.buffer]));
@@ -20,4 +20,6 @@ const downloadFile = (data, fileName) => {
   URL.revokeObjectURL(url);
 };
 
-export { isVideoFile, downloadFile };
+const getFileExtension = (fileName) => fileName.split(".").pop();
+
+export { isVideoFile, downloadFile, getFileExtension };
