@@ -5,17 +5,13 @@ const isVideoFile = (fileName) =>
 
 const downloadFile = (data, fileName) => {
   const url = URL.createObjectURL(new Blob([data.buffer]));
-
-  // Create a temporary anchor element
   const a = document.createElement("a");
-  a.href = url;
-  a.download = fileName; // Set the download attribute with desired filename
 
-  // Programmatically click the anchor to trigger download
+  a.href = url;
+  a.download = fileName;
   document.body.appendChild(a);
   a.click();
 
-  // Clean up
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 };

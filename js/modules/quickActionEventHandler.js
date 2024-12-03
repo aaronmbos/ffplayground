@@ -21,9 +21,14 @@ function handleQuickActionSelect() {
 }
 
 async function handleConvertButtonClick() {
+  const elements = getElements();
+  resetOutput(elements);
   try {
-    const fileName = document.getElementById("uploader").files[0].name;
-    const selectedOutput = document.getElementById("convert-output-fmt").value;
+    elements.outputContainerEl.classList.remove("hidden");
+    elements.statusEl.classList.remove("hidden");
+
+    const fileName = elements.uploaderEl.files[0].name;
+    const selectedOutput = elements.selectedOutputEl.value;
 
     let outputFormat = "";
     switch (selectedOutput) {
@@ -40,18 +45,57 @@ async function handleConvertButtonClick() {
         throw Error("Invalid output format selected.");
     }
 
-    const convertCommand = `-i ${fileName} -c copy output.${outputFormat}`;
+    const convertCommand = `-i ${fileName} ${
+      outputFormat == "gif" ? "" : "-c copy"
+    } output.${outputFormat}`;
     const commandArgs = parseFfmpegCommand(convertCommand);
+
     const data = await executeCommand(
-      document.getElementById("uploader").files[0],
+      elements.uploaderEl.files[0],
       commandArgs
     );
 
     downloadFile(data, `output.${outputFormat}`);
+
+    elements.statusEl.innerText = "Conversion completed successfully.";
+    elements.statusEl.classList.remove("italic");
+    elements.statusEl.classList.add("font-bold");
   } catch (error) {
-    console.log(error);
-    console.log("An error occurred converting your selected file");
+    handleError(error, elements);
   }
 }
+
+const getElements = () => {
+  const statusEl = document.getElementById("fmt-status-msg");
+  const uploaderEl = document.getElementById("uploader");
+  const selectedOutputEl = document.getElementById("convert-output-fmt");
+  const outputContainerEl = document.getElementById("fmt-output-container");
+
+  return {
+    statusEl,
+    uploaderEl,
+    selectedOutputEl,
+    outputContainerEl,
+  };
+};
+
+const handleError = (error, { statusEl }) => {
+  statusEl.innerText = "An error occurred while converting the file.";
+  statusEl.classList.remove("italic");
+  statusEl.classList.add("font-bold");
+  statusEl.classList.add("text-red-600");
+  console.error(error);
+};
+
+const resetOutput = ({ outputContainerEl, statusEl }) => {
+  outputContainerEl.classList.add("hidden");
+  statusEl.innerText = "Converting the file ...";
+  statusEl.classList.add("italic");
+  statusEl.classList.remove("font-bold");
+  statusEl.classList.toggle("hidden");
+  if (statusEl.classList.contains("text-red-600")) {
+    statusEl.classList.remove("text-red-600");
+  }
+};
 
 export { handleQuickActionSelect, handleConvertButtonClick };
