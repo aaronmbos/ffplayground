@@ -11,7 +11,7 @@
   "license": "MIT",
   "homepage": "https://github.com/aaronmbos/browser-ffmpeg#readme",
   "scripts": {
-    "twdev": " npx tailwindcss -i ./css/globals.css -o ./dist/output.css --watch",
+    "twdev": "npx tailwindcss -i ./css/globals.css -o ./dist/output.css --watch",
     "test": "node --experimental-vm-modules ./node_modules/.bin/jest"
   },
   "devDependencies": {
